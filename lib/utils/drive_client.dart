@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart' as signIn;
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:peplocker/model/note.dart';
+import 'package:peplocker/utils/NoteEncrypter.dart';
 import 'package:peplocker/utils/constants.dart';
 import 'package:peplocker/utils/google_auth_client.dart';
 
@@ -10,6 +11,7 @@ class DriveClient {
   final _fileName = Constants.driveFileName;
   final _driveFolderName = Constants.driveFolderName;
   final _driveFolderMimeType = Constants.driveFolderMimeType;
+  final _noteEncryptor = NoteEncrypter("mysecurepassword");
 
   Future<signIn.GoogleSignInAccount> signInUser() async {
     final googleSignIn =
@@ -23,7 +25,8 @@ class DriveClient {
     await for (List<int> data in stream) {
       streamData.addAll(data);
     }
-    var jsonString = utf8.decode(streamData);
+    var encryptedString = utf8.decode(streamData);
+    String jsonString = _noteEncryptor.decrypt(encryptedString);
     List<Note> notes =
         (json.decode(jsonString) as List).map((i) => Note.fromJson(i)).toList();
     return notes;
@@ -49,7 +52,8 @@ class DriveClient {
 
   drive.Media getUploadMedia(List<Note> notes) {
     String jsonString = jsonEncode(notes);
-    var byteArray = utf8.encode(jsonString);
+    String encryptedString = _noteEncryptor.encrypt(jsonString);
+    var byteArray = utf8.encode(encryptedString);
     final Stream<List<int>> mediaStream =
         Future.value(byteArray).asStream().asBroadcastStream();
     return drive.Media(mediaStream, byteArray.length);
