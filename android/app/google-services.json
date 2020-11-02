@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "734272323800",
+    "firebase_url": "https://peplocker.firebaseio.com",
+    "project_id": "peplocker",
+    "storage_bucket": "peplocker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734272323800:android:7513e8352436ac166bd7ad",
+        "android_client_info": {
+          "package_name": "com.example.peplocker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734272323800-bbj3o2njaebmvvl117247q46b3412d9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.peplocker",
+            "certificate_hash": "569c303fdd66a07db25c9becde07fb93437c2be4"
+          }
+        },
+        {
+          "client_id": "734272323800-7va8nugit5itdslf4b0lr9va2scl2nl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbmDtDiJ0DqZBN77l85a4B5AyXcDd2Gkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734272323800-7va8nugit5itdslf4b0lr9va2scl2nl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
