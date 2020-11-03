@@ -1,28 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peplocker/model/note.dart';
-import 'package:peplocker/screens/notes_screen.dart';
 import 'package:peplocker/utils/app_colors.dart';
 import 'package:peplocker/utils/utils.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
-
-  const NoteCard({Key key, this.note}) : super(key: key);
+  final Function onTap;
+  const NoteCard({Key key, this.note, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => NoteScreen(
-                      note: note,
-                    )),
-          );
-        },
+        onTap: onTap,
         child: Container(
             padding: EdgeInsets.all(20.0),
             margin: EdgeInsets.only(bottom: 10.0),

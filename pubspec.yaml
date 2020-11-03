@@ -33,6 +33,8 @@ dependencies:
   google_sign_in: ^4.5.5
   path_provider: ^1.6.22
   encrypt: ^4.1.0
+  shared_preferences: ^0.5.12+2
+  google_fonts: ^1.1.1
 
 dev_dependencies:
   flutter_test:

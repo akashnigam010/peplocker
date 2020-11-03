@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:peplocker/model/note.dart';
 import 'package:peplocker/utils/app_colors.dart';
 
-class NoteScreen extends StatefulWidget {
+class EditNote extends StatefulWidget {
   final Note note;
-  const NoteScreen({Key key, this.note}) : super(key: key);
+  final Function(Note) update;
+  const EditNote({Key key, this.note, this.update}) : super(key: key);
   @override
-  NoteScreenState createState() => NoteScreenState();
+  EditNoteState createState() => EditNoteState();
 }
 
-class NoteScreenState extends State<NoteScreen> {
+class EditNoteState extends State<EditNote> {
   String title = '';
   String content = '';
   final titleController = TextEditingController();
@@ -99,9 +100,21 @@ class NoteScreenState extends State<NoteScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Note note = widget.note;
+          if (note == null) {
+            note = new Note();
+          }
+          note.title = titleController.text;
+          note.content = contentController.text;
+          widget.update(note);
+          Navigator.pop(context);
+        },
         tooltip: 'Save',
-        child: Icon(Icons.check, color: Color(AppColors.black),),
+        child: Icon(
+          Icons.check,
+          color: Color(AppColors.black),
+        ),
         backgroundColor: Color(AppColors.primaryColor),
       ),
     );

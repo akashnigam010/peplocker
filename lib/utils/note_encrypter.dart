@@ -19,15 +19,8 @@ class NoteEncrypter {
   }
 
   String decrypt(String input) {
-    final decrypted = this._encrypter.decrypt(Encrypted.fromBase64(input), iv: this._iv);
+    final decrypted =
+        this._encrypter.decrypt(Encrypted.fromBase64(input), iv: this._iv);
     return decrypted;
   }
-
-  // main(List<String> args) {
-  //   final enc = NoteEncrypter("mysecurepassword");
-  //   final encryptedString = enc.encrypt("Lorem Ipsum 123123!@#");
-  //   print('Encrypted string : $encryptedString');
-  //   final decryptedString = enc.decrypt(encryptedString);
-  //   print('Decrypted string : $decryptedString');
-  // }
 }
