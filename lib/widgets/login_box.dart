@@ -18,17 +18,9 @@ class LoginBox extends StatelessWidget {
                 fontSize: 20, fontWeight: FontWeight.w100, letterSpacing: 15.0),
           ),
         ),
-        // Container(
-        //   margin: EdgeInsets.only(top: height / 12),
-        //   padding: EdgeInsets.all(20.0),
-        //   child: Text(
-        //     'LOGIN',
-        //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        //   ),
-        // ),
         Container(
-          height: height / 2.8,
-          padding: EdgeInsets.all(50.0),
+          height: height / 3.5,
+          padding: EdgeInsets.all(30.0),
           margin: EdgeInsets.only(left: 40.0, right: 40.0, top: height / 12),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),

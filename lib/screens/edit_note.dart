@@ -2,20 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peplocker/model/note.dart';
 import 'package:peplocker/utils/app_colors.dart';
+import 'package:peplocker/utils/app_lifecycle_aware_state.dart';
+import 'package:peplocker/widgets/delete_note.dart';
 
 class EditNote extends StatefulWidget {
   final Note note;
   final Function(Note) update;
-  const EditNote({Key key, this.note, this.update}) : super(key: key);
+  final Function(Note) delete;
+  final Function(Note) archive;
+  const EditNote({Key key, this.note, this.update, this.delete, this.archive})
+      : super(key: key);
   @override
   EditNoteState createState() => EditNoteState();
 }
 
-class EditNoteState extends State<EditNote> {
+class EditNoteState extends AppLifecycleAwareState<EditNote> {
   String title = '';
   String content = '';
   final titleController = TextEditingController();
   final contentController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -28,14 +34,28 @@ class EditNoteState extends State<EditNote> {
     }
   }
 
+  void showLoader(bool flag) {
+    setState(() {
+      this.isLoading = flag;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final node = FocusScope.of(context);
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-          // backgroundColor: Color(AppColors.lightGrey),
-          // title: Text(widget.title),
-          ),
+        actions: [
+          widget.note != null
+              ? DeleteNote(onDelete: () {
+                  widget.delete(widget.note);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                })
+              : Container(),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
@@ -61,10 +81,12 @@ class EditNoteState extends State<EditNote> {
                   },
                   style: TextStyle(
                     fontSize: 20.0,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                     color: Color(AppColors.greyBlack),
                   ),
                   controller: titleController,
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () => node.nextFocus(),
                 ),
               ),
               Container(
@@ -74,7 +96,7 @@ class EditNoteState extends State<EditNote> {
                   color: Color(AppColors.white),
                 ),
                 child: TextField(
-                  autofocus: true,
+                  autofocus: widget.note == null ? true : false,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(10.0),
                       border: InputBorder.none,

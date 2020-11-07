@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:encrypt/encrypt.dart';
+import 'package:peplocker/utils/crypto_constants.dart';
 
 class NoteEncrypter {
   final _iv;
@@ -7,8 +10,9 @@ class NoteEncrypter {
   NoteEncrypter._(this._iv, this._encrypter);
 
   factory NoteEncrypter(String password) {
-    final key = Key.fromUtf8(password);
-    final iv = IV.fromLength(16);
+    Uint8List salt = Uint8List.fromList(CryptoConstants.saltNumList);
+    final key = Key.fromUtf8(password).stretch(32, salt: salt);
+    final iv = IV.fromUtf8(CryptoConstants.iv);
     final encrypter = Encrypter(AES(key));
     return new NoteEncrypter._(iv, encrypter);
   }

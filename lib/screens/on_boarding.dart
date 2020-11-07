@@ -82,11 +82,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('i am tough!',
+                            Text('only you shall pass!',
                                 style: Utils.getStyleHeading2()),
                             SizedBox(height: 80.0),
                             Text(
-                                'i keep your notes locked & encrypted in your Google Drive',
+                                'i keep your notes in your Google Drive - locked, encrypted & safe ',
                                 style: Utils.getStyleHeading3()),
                             SizedBox(height: 80.0),
                             Text(
@@ -100,7 +100,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('you are my master!',
+                            Text('you have my key master!',
                                 style: Utils.getStyleHeading2()),
                             SizedBox(height: 80.0),
                             Text('unlock me everytime with my password',
@@ -136,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         } else {
                           final SharedPreferences prefs = await _prefs;
                           prefs.setBool(Constants.isFirstLaunch, false);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => Login()),
                           );

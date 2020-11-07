@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:peplocker/model/note.dart';
 import 'package:peplocker/utils/drive_client.dart';
 
@@ -17,20 +19,22 @@ class NotesRepositoryFactory {
 }
 
 class NotesRepository {
-  final DriveClient driveClient;
   final Map<int, Note> _notesMap;
-  NotesRepository._(this.driveClient, this._notesMap);
+  DriveClient _driveClient;
+  NotesRepository._(this._driveClient, this._notesMap);
 
   factory NotesRepository(DriveClient driveClient, List<Note> notes) {
-    final Map<int, Note> notesMap = new Map();
+    final Map<int, Note> notesMap = new HashMap();
     for (Note note in notes) {
       notesMap.update(note.id, (value) => note, ifAbsent: () => note);
     }
     return new NotesRepository._(driveClient, notesMap);
   }
 
+  set driveClient(DriveClient driveClient) => this._driveClient = driveClient;
+
   Future<void> syncNotes() async {
-    await driveClient.writeNotes(this._notesMap.values.toList());
+    await _driveClient.writeNotes(this._notesMap.values.toList());
   }
 
   List<Note> getNotes() {
@@ -39,14 +43,19 @@ class NotesRepository {
     return notes;
   }
 
-  Note saveNote(Note note) {
+  Future<Note> saveNote(Note note) async {
     final now = DateTime.now();
     if (note.id == null) {
       note.id = now.millisecondsSinceEpoch;
     }
     note.lastUpdated = now;
     this._notesMap.update(note.id, (value) => note, ifAbsent: () => note);
-    syncNotes();
+    await syncNotes();
     return note;
+  }
+
+  Future<void> deleteNote(Note note) async {
+    this._notesMap.remove(note.id);
+    await syncNotes();
   }
 }

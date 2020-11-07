@@ -3,39 +3,39 @@ import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:peplocker/model/note.dart';
-import 'package:peplocker/utils/note_encrypter.dart';
 import 'package:peplocker/utils/constants.dart';
 import 'package:peplocker/utils/google_auth_client.dart';
+import 'package:peplocker/utils/note_encrypter.dart';
 
 class DriveClient {
   final _fileName = Constants.driveFileName;
   final _driveFolderName = Constants.driveFolderName;
   final _driveFolderMimeType = Constants.driveFolderMimeType;
-  final NoteEncrypter _noteEncryptor; // = NoteEncrypter("mysecurepassword");
-  final GoogleSignIn _googleSignIn;
+  final GoogleSignIn googleSignIn;
+  NoteEncrypter _noteEncryptor;
 
-  DriveClient._(this._googleSignIn, this._noteEncryptor);
+  DriveClient._(this.googleSignIn, this._noteEncryptor);
 
-  factory DriveClient(String password) {
+  factory DriveClient(NoteEncrypter noteEncryptor) {
     final googleSignIn =
         GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
-    final noteEncryptor = NoteEncrypter(password);
     return new DriveClient._(googleSignIn, noteEncryptor);
   }
 
-  Future<bool> isSignedIn() async {
-    return await _googleSignIn.isSignedIn();
-  }
+  set noteEncryptor(NoteEncrypter noteEncryptor) =>
+      this._noteEncryptor = noteEncryptor;
 
   Future<GoogleSignInAccount> signIn() async {
-    if ((await isSignedIn()) && _googleSignIn.currentUser != null) {
-      return _googleSignIn.currentUser;
+    if (await googleSignIn.isSignedIn()) {
+      if (googleSignIn.currentUser != null) {
+        return googleSignIn.currentUser;
+      }
     }
-    return await _googleSignIn.signIn();
+    return await googleSignIn.signIn();
   }
 
   Future<GoogleSignInAccount> signOut() async {
-    return await _googleSignIn.signOut();
+    return await googleSignIn.signOut();
   }
 
   Future<List<Note>> parseStreamToNotes(Stream<List<int>> stream) async {

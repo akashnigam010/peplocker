@@ -20,12 +20,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Peplock',
       theme: ThemeData(
-        primaryColor: Color(AppColors.primaryColor),
-        scaffoldBackgroundColor: Color(AppColors.white),
-        textTheme: GoogleFonts.quicksandTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
+          primaryColor: Color(AppColors.primaryColor),
+          scaffoldBackgroundColor: Color(AppColors.white),
+          textTheme: GoogleFonts.quicksandTextTheme(
+            Theme.of(context).textTheme,
+          ),
+          appBarTheme: AppBarTheme(
+              textTheme: GoogleFonts.quicksandTextTheme(
+            Theme.of(context).textTheme,
+          )),
+          brightness: Brightness.light),
       home: Home(),
     );
   }
