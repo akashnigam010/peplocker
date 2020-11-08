@@ -79,7 +79,7 @@ class ListNotesState extends AppLifecycleAwareState<ListNotes> {
     return Scaffold(
       backgroundColor: Color(AppColors.white),
       appBar: AppBar(
-        title: Text('My Notes'),
+        title: Text('My PepNotes'),
         backgroundColor: Color(AppColors.primaryColor),
         actions: [
           IconButton(
