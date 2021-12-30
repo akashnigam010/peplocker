@@ -15,16 +15,20 @@
       },
       "oauth_client": [
         {
+          "client_id": "734272323800-dd33oojqhp9g1voq8pmc8d33afcqd4lg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peplocker",
+            "certificate_hash": "3a146f7bcce67c56f34ebc5d9bd8685e78b966eb"
+          }
+        },
+        {
           "client_id": "734272323800-hs6pl9s0l64i4e3gh7t9r1j959pbf62a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.peplocker",
             "certificate_hash": "569c303fdd66a07db25c9becde07fb93437c2be4"
           }
-        },
-        {
-          "client_id": "734272323800-7va8nugit5itdslf4b0lr9va2scl2nl3.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -34,12 +38,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "734272323800-7va8nugit5itdslf4b0lr9va2scl2nl3.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

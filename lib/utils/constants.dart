@@ -3,9 +3,13 @@ class Constants {
   static final String isFirstLaunch = 'isFirstLaunch';
   static final String driveFolderName = 'Peplocker';
   static final String driveFileName = 'peplocker-notes-db.txt';
-  static final String driveFolderMimeType = 'application/vnd.google-apps.folder';
+  static final String driveFolderMimeType =
+      'application/vnd.google-apps.folder';
   static final String changePassword = 'changePassword';
   static final String signOut = 'signOut';
+  static final String privacy = 'privacy';
+  static final String privacyPolicy =
+      'https://peplocker.akashnigam.co.in/privacy.html';
   static final String appLocked = 'App locked, please login again';
 
   // password error messages and patterns
@@ -30,4 +34,6 @@ class Constants {
 . contain a number
 . contain a special character
 . not contain any whitespace''';
+  static final String discardNote = '''You made some changes to this note.
+Do you want to save them?''';
 }

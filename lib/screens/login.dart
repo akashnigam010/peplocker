@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peplocker/screens/list_notes.dart';
@@ -63,6 +62,7 @@ class LoginState extends State<Login> {
   }
 
   Future<void> submitPassword() async {
+    FocusScope.of(context).unfocus();
     final password = passwordController.text;
     // check password rules
     final validationResult = Utils.checkPassword(password);
@@ -76,7 +76,7 @@ class LoginState extends State<Login> {
       setState(() {
         isInvalid = false;
       });
-      final driveClient = DriveClient(new NoteEncrypter(password));
+      final driveClient = DriveClient.fromNoteEncryptor(new NoteEncrypter(password));
       // signin user - if not already signed in
       showLoader(true);
       await driveClient.signIn();
@@ -134,7 +134,7 @@ class LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       PepRaisedButton(
-                          text: 'SUBMIT',
+                          text: 'LOGIN',
                           onPressed: submitPassword,
                           isLoading: this.isLoading),
                       Container(

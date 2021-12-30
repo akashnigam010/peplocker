@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:peplocker/screens/login.dart';
 import 'package:peplocker/utils/app_colors.dart';
 import 'package:peplocker/utils/constants.dart';
+import 'package:peplocker/utils/drive_client.dart';
 import 'package:peplocker/utils/utils.dart';
+import 'package:peplocker/widgets/google_signin_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -36,6 +38,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
+  }
+
+  Widget _actionButton() {
+    if (_currentPage != _numPages - 1) {
+      return TextButton(
+        onPressed: () async {
+          _pageController.nextPage(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.ease,
+          );
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'next',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      return GoogleSigninButton(
+        onPressed: () async {
+          final driveClient = DriveClient();
+          final resp = await driveClient.signIn();
+          if (resp != null) {
+            final SharedPreferences prefs = await _prefs;
+            prefs.setBool(Constants.isFirstLaunch, false);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Login()),
+            );
+          }
+        },
+      );
+    }
+  }
+
+  AlignmentGeometry _buttonAlignment() {
+    if (_currentPage != _numPages - 1) {
+      return FractionalOffset.bottomRight;
+    }
+    return FractionalOffset.bottomCenter;
   }
 
   @override
@@ -125,39 +175,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 Expanded(
                   child: Align(
-                    alignment: FractionalOffset.bottomRight,
-                    child: FlatButton(
-                      onPressed: () async {
-                        if (_currentPage != _numPages - 1) {
-                          _pageController.nextPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease,
-                          );
-                        } else {
-                          final SharedPreferences prefs = await _prefs;
-                          prefs.setBool(Constants.isFirstLaunch, false);
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => Login()),
-                          );
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            _currentPage != _numPages - 1
-                                ? 'next'
-                                : 'set password',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w300
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    alignment: _buttonAlignment(),
+                    child: _actionButton(),
                   ),
                 )
               ],

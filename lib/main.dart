@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Color(AppColors.primaryColor)));
     return MaterialApp(
-      title: 'Peplock',
+      title: 'Peplocker',
       theme: ThemeData(
           primaryColor: Color(AppColors.primaryColor),
           scaffoldBackgroundColor: Color(AppColors.white),
@@ -29,9 +29,11 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
           appBarTheme: AppBarTheme(
-              textTheme: GoogleFonts.quicksandTextTheme(
-            Theme.of(context).textTheme,
-          )),
+              backgroundColor: Color(AppColors.primaryColor),
+              titleTextStyle: GoogleFonts.quicksandTextTheme(
+                Theme.of(context).textTheme,
+              ).headline6,
+              iconTheme: IconThemeData(color: Color(AppColors.black))),
           brightness: Brightness.light),
       home: Home(),
     );

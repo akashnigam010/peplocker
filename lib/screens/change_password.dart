@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peplocker/screens/login.dart';
 import 'package:peplocker/utils/app_colors.dart';
@@ -81,7 +80,7 @@ class ChangePasswordState extends AppLifecycleAwareState<ChangePassword> {
       });
     }
 
-    final driveClient = DriveClient(new NoteEncrypter(currentPW));
+    final driveClient = DriveClient.fromNoteEncryptor(new NoteEncrypter(currentPW));
     showLoader(true);
     await driveClient.signIn();
     try {

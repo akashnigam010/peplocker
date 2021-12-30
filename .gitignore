@@ -43,3 +43,6 @@ app.*.map.json
 # Crypto Secrets
 **/utils/crypto_constants.dart
 **/crypto_constants.dart
+
+# keystore
+**/*.jks

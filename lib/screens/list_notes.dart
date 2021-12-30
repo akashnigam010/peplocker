@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peplocker/model/note.dart';
 import 'package:peplocker/screens/change_password.dart';
@@ -12,6 +11,7 @@ import 'package:peplocker/utils/notes_repository.dart';
 import 'package:peplocker/utils/utils.dart';
 import 'package:peplocker/widgets/custom_search.dart';
 import 'package:peplocker/widgets/note_card.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ListNotes extends StatefulWidget {
   final DriveClient driveClient;
@@ -77,10 +77,10 @@ class ListNotesState extends AppLifecycleAwareState<ListNotes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(AppColors.white),
+      // backgroundColor: Color(AppColors.white),
       appBar: AppBar(
-        title: Text('My PepNotes'),
-        backgroundColor: Color(AppColors.primaryColor),
+        title: Text('My Notes'),
+        // backgroundColor: Color(AppColors.black),
         actions: [
           IconButton(
               icon: Icon(Icons.search_rounded),
@@ -108,8 +108,11 @@ class ListNotesState extends AppLifecycleAwareState<ListNotes> {
               new PopupMenuItem<String>(
                   child: new Text('Sign out of Google Drive'),
                   value: Constants.signOut),
+              new PopupMenuItem<String>(
+                  child: new Text('Privacy Policy'),
+                  value: Constants.privacy),
             ],
-            onSelected: (String val) {
+            onSelected: (String val) async {
               if (val == Constants.signOut) {
                 widget.driveClient.signOut();
                 Navigator.pushReplacement(
@@ -121,6 +124,11 @@ class ListNotesState extends AppLifecycleAwareState<ListNotes> {
                   context,
                   MaterialPageRoute(builder: (context) => ChangePassword()),
                 );
+              } else if (val == Constants.privacy) {
+                var url = Constants.privacyPolicy;
+                if (await canLaunch(url)) {
+                  await launch(url);
+                }
               }
             },
           ),
@@ -133,7 +141,7 @@ class ListNotesState extends AppLifecycleAwareState<ListNotes> {
                 color: Colors.white.withOpacity(0.5),
                 child: CircularProgressIndicator(
                   valueColor:
-                      AlwaysStoppedAnimation<Color>(Color(AppColors.primaryColor)),
+                      AlwaysStoppedAnimation<Color>(Color(AppColors.greyBlack)),
                 ))
             : (this.notes.length == 0
                 ? Container(

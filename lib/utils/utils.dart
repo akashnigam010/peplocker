@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -59,17 +58,19 @@ class Utils {
   }
 
   static String titlePreview(String title) {
-    if (title.length < 40) {
-      return title;
+    String trimmedTitle = title.trim();
+    if (trimmedTitle.length < 40) {
+      return trimmedTitle;
     }
-    return title.substring(0, 40) + ' ...';
+    return trimmedTitle.substring(0, 40) + ' ...';
   }
 
   static String contentPreview(String content) {
-    if (content.length < 300) {
-      return content;
+    String trimmedContent = content.trim();
+    if (trimmedContent.length < 120) {
+      return trimmedContent;
     }
-    return content.substring(0, 300) + ' ...';
+    return trimmedContent.substring(0, 120) + ' ...';
   }
 
   static TextStyle getStyleHeading1() {
@@ -85,7 +86,17 @@ class Utils {
   }
 
   static TextStyle getStyleHeading4() {
-    return TextStyle(fontSize: 15, fontWeight: FontWeight.w200);
+    return TextStyle(fontSize: 18, fontWeight: FontWeight.w200);
+  }
+
+  static ButtonStyle dismissButtonStyle() {
+    var style = ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(Color(AppColors.white)),
+      foregroundColor:
+          MaterialStateProperty.all<Color>(Color(AppColors.greyBlack)),
+      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12.0)),
+    );
+    return style;
   }
 
   static Future<void> showSimpleDialog(
@@ -97,9 +108,9 @@ class Utils {
         return AlertDialog(
           content: widget,
           actions: <Widget>[
-            FlatButton(
-              child: Text('ok'),
-              textColor: Color(AppColors.primaryColor),
+            TextButton(
+              child: Text('OK'),
+              style: dismissButtonStyle(),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -110,7 +121,7 @@ class Utils {
     );
   }
 
-  static Future<void> showDetailedDialog(
+  static Future<bool> showDetailedDialog(
       AlertLevel alertLevel,
       String heading,
       String text,
@@ -129,7 +140,7 @@ class Utils {
         icon = Icons.warning;
         break;
     }
-    return showDialog<void>(
+    return showDialog<bool>(
       context: _context,
       barrierDismissible: dismissable,
       builder: (BuildContext context) {
@@ -156,12 +167,7 @@ class Utils {
   }
 
   static Widget getFlatButton(String text, Function onPressed) {
-    return FlatButton(
-      padding: EdgeInsets.all(12.0),
-      child: Text(text),
-      onPressed: onPressed,
-      color: Color(AppColors.white),
-      textColor: Color(AppColors.greyBlack),
-    );
+    return TextButton(
+        child: Text(text), onPressed: onPressed, style: dismissButtonStyle());
   }
 }

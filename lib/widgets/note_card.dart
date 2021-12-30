@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peplocker/model/note.dart';
 import 'package:peplocker/utils/app_colors.dart';
@@ -20,7 +19,14 @@ class NoteCard extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 border: Border.all(color: Color(AppColors.lightGrey)),
-                color: Color(AppColors.white)),
+                color: Color(AppColors.white),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(AppColors.lightGrey),
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 5.0,
+                  ),
+                ],),
             child: Column(
               children: [
                 note.title.isNotEmpty
@@ -31,9 +37,9 @@ class NoteCard extends StatelessWidget {
                           Utils.titlePreview(note.title),
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Color(AppColors.black),
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600),
+                              color: Color(AppColors.greyBlack),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w800),
                         ),
                       )
                     : Container(),
@@ -46,8 +52,8 @@ class NoteCard extends StatelessWidget {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: Color(AppColors.greyBlack),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500),
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
                     : Container(),
@@ -59,7 +65,7 @@ class NoteCard extends StatelessWidget {
                     style: TextStyle(
                         color: Color(AppColors.darkGrey),
                         fontSize: 12.0,
-                        fontWeight: FontWeight.w300),
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
               ],

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peplocker/utils/app_colors.dart';
 
@@ -12,10 +11,25 @@ class PepRaisedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      disabledColor: Color(AppColors.black),
-      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+    return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed))
+              return Color(AppColors.primaryColor);
+            else if (states.contains(MaterialState.disabled))
+              return Color(AppColors.primaryColor);
+            return Color(AppColors.primaryColor);
+          },
+        ),
+        minimumSize: MaterialStateProperty.all<Size>(Size(100, 36)),
+        padding: MaterialStateProperty.all<EdgeInsets>(
+            EdgeInsets.only(left: 15.0, right: 15.0)),
+        shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            side: BorderSide(color: Colors.white24))),
+      ),
       child: isLoading
           ? Container(
               height: 15.0,
@@ -23,8 +37,8 @@ class PepRaisedButton extends StatelessWidget {
               alignment: Alignment.center,
               child: CircularProgressIndicator(
                 strokeWidth: 1.0,
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(Color(AppColors.primaryColor)),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Color(AppColors.black)),
               ))
           : Text(
               text,
@@ -32,10 +46,6 @@ class PepRaisedButton extends StatelessWidget {
                 color: Color(AppColors.black),
               ),
             ),
-      color: Color(AppColors.primaryColor),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          side: BorderSide(color: Colors.white24)),
     );
   }
 }

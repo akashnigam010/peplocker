@@ -36,9 +36,11 @@ class CustomSearch extends SearchDelegate<Note> {
   @override
   Widget buildSuggestions(BuildContext context) {
     List<Note> listToShow;
+    String queryToLower = query.toLowerCase();
     if (query.isNotEmpty) {
       listToShow = data.where((note) {
-        return note.title.contains(query) || note.content.contains(query);
+        return note.title.toLowerCase().contains(queryToLower) ||
+            note.content.toLowerCase().contains(queryToLower);
       }).toList();
     } else {
       listToShow = [];

@@ -16,7 +16,15 @@ class DriveClient {
 
   DriveClient._(this.googleSignIn, this._noteEncryptor);
 
-  factory DriveClient(NoteEncrypter noteEncryptor) {
+  DriveClient.fromGoogleSignin(this.googleSignIn);
+
+  factory DriveClient() {
+    final googleSignIn =
+        GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
+    return new DriveClient.fromGoogleSignin(googleSignIn);
+  }
+
+  factory DriveClient.fromNoteEncryptor(NoteEncrypter noteEncryptor) {
     final googleSignIn =
         GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
     return new DriveClient._(googleSignIn, noteEncryptor);
