@@ -5,6 +5,6 @@
 - Nothing gets stored locally - your notes data or your google account data
 - You sign in with your password which is used as the key for a symmetric AES 256 bit encryption - an industry standard.
 - When you update your notes, the data is encrypted in realtime and saved in your Google Drive account without being saved locally. This introduces a bit of delay while saving the changes, but improves security.
-- When you switch between apps or lock your phone screen, Peplocker automatically logs you out.
+- When you exit Peplocker app or lock your phone screen, it automatically logs you out - no worries there.
 
 This privacy policy will be updated in future.

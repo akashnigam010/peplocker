@@ -7,11 +7,11 @@ A simple & secure way to keep your private notes
 
   
 
-#### Are you worried about those passwords & usernames that you keep saving in your email's draft folder?
+#### Worried about the passwords you keep saving as email drafts?
 
-#### Or do you have a hard time remembering the loads of ATM pins or card numbers?
+#### Or have a hard time remembering the loads of ATM pins or card numbers?
 
-#### Or simply wish to keep your notes just to yourself?
+#### Or maybe just simply wish to keep your notes only to yourself?
 
 
 ---
@@ -21,24 +21,21 @@ Enters Peplocker!
 
 ---  
 
-Peplocker keeps your private stuff, just to yourself - so that you can finally relax and be at peace with your secrets 🤫
+Peplocker keeps your private stuff, just to yourself - so that you can relax and finally be at peace with your secrets 🤫
 
 
   
 
-It makes use of AES 256 bit encryption - an industry standard to encrypt your notes and keeps them safe in your Google Drive.
+It does a little encryption hocus-pocus (AES 256 bit encryption) to encrypt your notes and simply saves them in your Google Drive account - safe & secure, which can only be seen by you when you login to Peplocker app.
 
   
 
-The catch? - only you can see them when you login to Peplocker.
+Your data is always secured.
+Nothing is ever saved in your device memory. Every single change you make is encrypted and saved instantly to your Google Drive.
 
   
 
-Your data is always secured. Nothing is ever saved in your device memory. Every change you make is encrypted and saved right to your google drive.
-
-  
-
-Additionally, Peplocker signs out immediately as soon as you switch screen or lock your phone.
+Peplocker signs out immediately as soon as you exit the app or even lock your phone.
 
   
 
