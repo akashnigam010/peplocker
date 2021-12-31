@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:peplocker/screens/existing_user_check.dart';
 import 'package:peplocker/screens/login.dart';
 import 'package:peplocker/utils/app_colors.dart';
 import 'package:peplocker/utils/constants.dart';
@@ -57,7 +58,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               Text(
                 'next',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w300,
+                    color: Color(AppColors.black)),
               )
             ],
           ),
@@ -73,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             prefs.setBool(Constants.isFirstLaunch, false);
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => Login()),
+              MaterialPageRoute(builder: (context) => ExistingUserCheck()),
             );
           }
         },
@@ -122,7 +126,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 style: Utils.getStyleHeading2()),
                             SizedBox(height: 80.0),
                             Text(
-                                'a simple & secure way to keep your private notes',
+                                'a simple & secure way to keep your notes private',
                                 style: Utils.getStyleHeading3()),
                           ],
                         ),
@@ -132,15 +136,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('only you shall pass!',
+                            Text('security - my aim!',
                                 style: Utils.getStyleHeading2()),
                             SizedBox(height: 80.0),
                             Text(
-                                'i keep your notes in your Google Drive - locked, encrypted & safe ',
+                                'i encrypt your notes & keep them in your Google Drive - locked & safe',
                                 style: Utils.getStyleHeading3()),
                             SizedBox(height: 80.0),
-                            Text(
-                                'only you can unlock and see them, not even Google',
+                            Text('only you can unlock them, not even Google',
                                 style: Utils.getStyleHeading3()),
                           ],
                         ),
@@ -150,19 +153,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('you have my key master!',
+                            Text('i work with one password!',
                                 style: Utils.getStyleHeading2()),
                             SizedBox(height: 80.0),
-                            Text('unlock me everytime with my password',
-                                style: Utils.getStyleHeading3()),
-                            SizedBox(height: 50.0),
+                            // Text('unlock me everytime with my password',
+                            //     style: Utils.getStyleHeading3()),
+                            // SizedBox(height: 50.0),
                             Text(
-                                'but do not forget it as you can\'t recover your notes without it',
+                                'but don\'t lose it since I can\'t recover your notes without it',
                                 style: Utils.getStyleHeading3()),
-                            SizedBox(height: 50.0),
+                            SizedBox(height: 40.0),
                             Text(
-                                'and when you reinstall the app, use your old password to recover your notes',
+                                'and if you re-install the app, simply use the same google account and password',
                                 style: Utils.getStyleHeading4()),
+                            SizedBox(height: 40.0),
+                            Text('let\'s get started!',
+                                style: Utils.getStyleHeading2()),
                           ],
                         ),
                       ),

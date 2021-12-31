@@ -8,6 +8,8 @@ class Password extends StatelessWidget {
   final bool isInvalid;
   final String errorMessage;
   final TextEditingController controller;
+  final FocusNode focusNode;
+  final String hintText;
   final Function() onEditingComplete;
   final Function(String _) onSubmitted;
 
@@ -18,6 +20,8 @@ class Password extends StatelessWidget {
       this.isInvalid,
       this.errorMessage,
       this.controller,
+      this.focusNode,
+      this.hintText,
       this.onEditingComplete,
       this.onSubmitted})
       : super(key: key);
@@ -31,9 +35,11 @@ class Password extends StatelessWidget {
         enableSuggestions: false,
         autocorrect: false,
         cursorColor: Color(AppColors.black),
-        style: TextStyle(color: Color(AppColors.black), fontSize: 16.0),
-        keyboardType: TextInputType.name,
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Color(AppColors.black), fontSize: 20.0),
+        keyboardType: TextInputType.text,
         inputFormatters: [LengthLimitingTextInputFormatter(30)],
+        focusNode: focusNode,
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Color(AppColors.black)),
@@ -41,8 +47,10 @@ class Password extends StatelessWidget {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Color(AppColors.black)),
           ),
-          labelText: label,
-          labelStyle: TextStyle(color: Color(AppColors.black)),
+          hintText: hintText,
+          hintStyle:
+              TextStyle(color: Color(AppColors.greyBlack), fontSize: 16.0),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           errorText: isInvalid ? errorMessage : null,
           errorStyle: TextStyle(color: Color(AppColors.black)),
         ),
