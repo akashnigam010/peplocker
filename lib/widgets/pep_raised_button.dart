@@ -14,6 +14,7 @@ class PepRaisedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ButtonStyle(
+        elevation: MaterialStateProperty.all<double>(0),
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed))
@@ -28,7 +29,7 @@ class PepRaisedButton extends StatelessWidget {
             EdgeInsets.only(left: 15.0, right: 15.0)),
         shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
-            side: BorderSide(color: Colors.white24))),
+            side: BorderSide(color: Color(AppColors.black)))),
       ),
       child: isLoading
           ? Container(

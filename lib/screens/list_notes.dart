@@ -3,6 +3,7 @@ import 'package:peplocker/model/note.dart';
 import 'package:peplocker/screens/change_password.dart';
 import 'package:peplocker/screens/edit_note.dart';
 import 'package:peplocker/screens/login.dart';
+import 'package:peplocker/screens/on_boarding.dart';
 import 'package:peplocker/utils/app_colors.dart';
 import 'package:peplocker/utils/app_lifecycle_aware_state.dart';
 import 'package:peplocker/utils/constants.dart';
@@ -11,6 +12,7 @@ import 'package:peplocker/utils/notes_repository.dart';
 import 'package:peplocker/utils/utils.dart';
 import 'package:peplocker/widgets/custom_search.dart';
 import 'package:peplocker/widgets/note_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ListNotes extends StatefulWidget {
@@ -106,19 +108,20 @@ class ListNotesState extends AppLifecycleAwareState<ListNotes> {
                   child: new Text('Change password'),
                   value: Constants.changePassword),
               new PopupMenuItem<String>(
-                  child: new Text('Sign out of Google Drive'),
-                  value: Constants.signOut),
+                  child: new Text('Privacy Policy'), value: Constants.privacy),
               new PopupMenuItem<String>(
-                  child: new Text('Privacy Policy'),
-                  value: Constants.privacy),
+                  child: new Text('Logout'), value: Constants.signOut),
             ],
             onSelected: (String val) async {
               if (val == Constants.signOut) {
                 widget.driveClient.signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                prefs.setBool(Constants.isFirstLaunch, true);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                    (route) => false);
               } else if (val == Constants.changePassword) {
                 Navigator.push(
                   context,

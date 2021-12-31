@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peplocker/screens/list_notes.dart';
+import 'package:peplocker/screens/on_boarding.dart';
 import 'package:peplocker/utils/app_colors.dart';
 import 'package:peplocker/utils/constants.dart';
 import 'package:peplocker/utils/drive_client.dart';
@@ -8,7 +9,9 @@ import 'package:peplocker/utils/note_encrypter.dart';
 import 'package:peplocker/utils/notes_repository.dart';
 import 'package:peplocker/utils/utils.dart';
 import 'package:peplocker/widgets/login_box.dart';
+import 'package:peplocker/widgets/password.dart';
 import 'package:peplocker/widgets/pep_raised_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   final String message;
@@ -23,6 +26,8 @@ class LoginState extends State<Login> {
   bool isInvalid = false;
   bool isLoading = false;
   String errorMessage;
+  FocusNode focusNode = FocusNode();
+  String hintText = 'Enter Password';
 
   @override
   void initState() {
@@ -30,6 +35,14 @@ class LoginState extends State<Login> {
     if (widget.message != null && widget.message.isNotEmpty) {
       Utils.toast(widget.message);
     }
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        hintText = '';
+      } else {
+        hintText = 'Enter Password';
+      }
+      setState(() {});
+    });
   }
 
   void showLoader(bool flag) {
@@ -51,13 +64,13 @@ class LoginState extends State<Login> {
       }
       NotesRepositoryFactory.createRepository(driveClient, notes);
       showLoader(false);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ListNotes(
-                  driveClient: driveClient,
-                )),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ListNotes(
+                    driveClient: driveClient,
+                  )),
+          (route) => false);
     }
   }
 
@@ -76,7 +89,8 @@ class LoginState extends State<Login> {
       setState(() {
         isInvalid = false;
       });
-      final driveClient = DriveClient.fromNoteEncryptor(new NoteEncrypter(password));
+      final driveClient =
+          DriveClient.fromNoteEncryptor(new NoteEncrypter(password));
       // signin user - if not already signed in
       showLoader(true);
       await driveClient.signIn();
@@ -97,54 +111,43 @@ class LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    child: TextField(
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      cursorColor: Color(AppColors.black),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color(AppColors.black), fontSize: 20.0),
-                      keyboardType: TextInputType.text,
-                      inputFormatters: [LengthLimitingTextInputFormatter(30)],
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(AppColors.black)),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(AppColors.black)),
-                        ),
-                        hintText: 'Enter Password',
-                        hintStyle: TextStyle(color: Color(AppColors.lightGrey), fontSize: 18.0),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        errorText: isInvalid ? errorMessage : null,
-                        errorStyle: TextStyle(color: Color(AppColors.black)),
-                      ),
-                      maxLines: 1,
-                      controller: passwordController,
-                      onSubmitted: (String val) {
-                        submitPassword();
-                      },
-                    ),
+                  Password(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    controller: passwordController,
+                    isInvalid: isInvalid,
+                    errorMessage: errorMessage,
+                    focusNode: focusNode,
+                    hintText: hintText,
+                    onSubmitted: (String val) {
+                      submitPassword();
+                    },
                   ),
+                  SizedBox(height: 20),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       PepRaisedButton(
                           text: 'LOGIN',
                           onPressed: submitPassword,
                           isLoading: this.isLoading),
+                      SizedBox(height: 10),
                       Container(
                         child: TextButton(
-                            onPressed: () => Utils.showSimpleDialog(
-                                Text(Constants.passwordRules), true, context),
-                            child: Text('Password Rules?',
+                            onPressed: () async {
+                              await DriveClient().signOut();
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setBool(Constants.isFirstLaunch, true);
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OnboardingScreen()),
+                                  (route) => false);
+                            },
+                            child: Text('Logout from Google Drive',
                                 style: TextStyle(
                                   fontSize: 12.0,
-                                  color: Color(AppColors.lightGrey),
+                                  color: Color(AppColors.greyBlack),
                                   decoration: TextDecoration.underline,
                                 ))),
                       ),
