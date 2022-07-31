@@ -5,7 +5,7 @@ import 'package:peplocker/utils/crypto_constants.dart';
 
 class NoteEncrypter {
   final _iv;
-  final _encrypter;
+  final Encrypter _encrypter;
 
   NoteEncrypter._(this._iv, this._encrypter);
 
